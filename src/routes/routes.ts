@@ -1,5 +1,6 @@
 import { lazy, LazyExoticComponent } from 'react';
 // import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages/';
+import {NoLazyload} from '../01-lazyload/pages';
 
 // el componente debe llamarse con la letra 'c' en mayuscula 'C', ya que los componentes de React se deben llamar con la primera letra Mayuscula
 
@@ -20,12 +21,14 @@ interface Route {
  * si no le colocamos el webpackChunkName entonces el colocara un nombre extraño el cual al nosotros revisar el inspector de elementos,
  * no podremos saber cual fue el componente que se cargo
  */
-const lazy1 = lazy(()=>import( /* webpackChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
-const lazy2 = lazy(()=>import( /* webpackChunkName: "LazyPage2" */ '../01-lazyload/pages/LazyPage2'));
-const lazy3 = lazy(()=>import( /* webpackChunkName: "LazyPage3" */ '../01-lazyload/pages/LazyPage3'));
+const LazyLayout = lazy(()=>import( /* webpackChunkName: "LazyPage1" */ '../01-lazyload/layout/LazyLayout'));
+// const lazy1 = lazy(()=>import( /* webpackChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
+// const lazy2 = lazy(()=>import( /* webpackChunkName: "LazyPage2" */ '../01-lazyload/pages/LazyPage2'));
+// const lazy3 = lazy(()=>import( /* webpackChunkName: "LazyPage3" */ '../01-lazyload/pages/LazyPage3'));
 
+
+// para las rutas
 export const routes: Route[] = [
-    {to: '/lazy1', path: 'lazy1', name:'lazy-1', Component: lazy1 },
-    {to: '/lazy2', path: 'lazy2', name:'lazy-2', Component: lazy2 },
-    {to: '/lazy3', path: 'lazy3', name:'lazy-3', Component: lazy3 },
+    {path: 'no-lazy', to: '/no-lazy', name:'Carga normal', Component: NoLazyload }, // carga normal
+    {path: '/LazyLayout/*', to: '/lazyLayout/',  name:'LazyLayout - Dashboard - Carga perezosa', Component: LazyLayout }, // carga  perezosa
 ]
