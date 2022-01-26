@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import ShoppingPage from '../02-patron-de-diseno-component-patterns/pages/ShoppingPage';
 import logo from '../logo.svg';
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
 
 const Navigation = () => {
     /**
@@ -20,21 +20,20 @@ const Navigation = () => {
                     <img src={logo} alt='React logo' />
                     <ul>
                         <li>
-                            <NavLink to='/lazy1' className={({isActive}) => "" + (isActive ? "nav-active" : "")} >lazy1</NavLink>
+                            <NavLink to='/' className={({isActive}) => "" + (isActive ? "nav-active" : "")} >Shopping</NavLink>
                         </li>
                         <li>
-                            <NavLink to='/lazy2' className={({isActive}) => "" + (isActive ? "nav-active" : "")}>lazy2</NavLink>
+                            <NavLink to='/about' className={({isActive}) => "" + (isActive ? "nav-active" : "")}>about</NavLink>
                         </li>
                         <li>
-                            <NavLink to='/lazy3' className={({isActive}) => "" + (isActive ? "nav-active" : "")}>lazy3</NavLink>
+                            <NavLink to='/users' className={({isActive}) => "" + (isActive ? "nav-active" : "")}>users</NavLink>
                         </li>
                     </ul>
                 </nav>
                 <Routes>
-                    <Route path="lazy1" element={<LazyPage1 /> } />
-                    <Route path="lazy2" element={<LazyPage2 /> } />
-                    <Route path="lazy3" element={<LazyPage3 />  } />
-                    <Route path="/*" element={<Navigate to='lazy1' replace /> } />
+                    <Route path="about" element={<h1> Desde About </h1>} />
+                    <Route path="users" element={<h1> Desde Users </h1>} />
+                    <Route path="/" element={<ShoppingPage />  } />
                 </Routes>
             </div>
         </BrowserRouter>
