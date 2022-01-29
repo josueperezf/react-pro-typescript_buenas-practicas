@@ -66,3 +66,5 @@ nota: los hijos los podemos ordenar de la forma que queramos, esto no influye en
 # component-compound props
 
     en esta rama se permitio que a nuestro componente le podamos agregar caracteristicas que le podriamos colocar a una etiqueta html, como por ejemplo, que reciba css, que tenga evento onchange, esto es para hacer reutilizable el componente, asi mismo tener un contro dentro o fuera del mismo componente, este agrega productos a un carrito de compra, teniendo botones para agregar 1 o restar 1, si le agregamos el onchange, nuestro componente, solo retornara 1 o -1 segun esta aumentando o decrementando, si no le colocamos el onchange, nuestro componente asume que nosotros queremos que el controle todo, e internamente nos hara el contador de productos
+
+<b> Esta version es mas mantenible, cada area o hook controla su tarea y no centraliza todo en una sola area </b>
