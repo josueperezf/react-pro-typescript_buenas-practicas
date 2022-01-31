@@ -80,7 +80,10 @@ NPM Deploy
     
     Usualmente cuando nos damos cuenta que un código puede convertirse en un paquete de NPM por si solo, es porque ya lo creamos en una aplicación, ahí es donde me refiero a realizar la pulida inicial.
 
-2. Paso #1: Crear paquete
+2. Paso #1: debemos ir a las carpeta que nos genero al ejecutar el comando anterior, en ella ejecutamos en la terminal
+    <b>npm start</b> para que nos genere la carpeta dist
+
+3. Paso #2: Crear paquete
 
     npx tsdx create <b>nombre_de_mi_paquete_a_crear</b>
     ejemplo <b>npx tsdx create jp_product-cad</b>
@@ -91,14 +94,14 @@ NPM Deploy
     tsdx.io - JavaScript y React
 
 
-3. Paso #2: Optimizar index.tsx
+4. Paso #3: Optimizar index.tsx
     El archivo src/index.tsx, es el punto de entrada de todas las importaciones, por lo que ahí debe de tener las exportaciones que las personas u otros desarrolladores importarán.
     
     Podemos crear exportaciones de esta forma para no perder nuestra estructura.
     
         export * from './components';
 
-4. Paso #3: ( Opcional ) Módulos
+5. Paso #4: ( Opcional ) Módulos
     Si tu código que estás creando tiene imágenes importadas de esta forma y/o CSS modularizado de esta forma:
 
         import noImage from ‘../assets/no-image.jpg';
@@ -133,7 +136,7 @@ NPM Deploy
     <https://tsdx.io/customization#rollup>
 
 
-5. Paso #4: Build
+6. Paso #5: Build
     Ejecutar el comando
 
     <b>yarn build</b>
@@ -142,11 +145,11 @@ NPM Deploy
     
     Corregir cualquier error que aquí aparezca.
 
-6. Paso #5: Example
+7. Paso #6: Example
 
     Crear un ejemplo de cómo se usa el código, usualmente personas que tengan curiosidad y necesidad de un ejemplo, irán a verlo.
 
-7.  Paso #6: GitHub Repo
+8.  Paso #7: GitHub Repo
     Este paso aunque suene opcional, es importante para la longevidad del proyecto, puede que eventualmente decidas dejarlo y heredarlo a otra persona que lo continuará o invitar colaboradores que puedan realizar actualizaciones o bien aceptar mejoras que otras personas puedan hacer a tu paquete.
     
     Adicionalmente tratar de mantener release tags acorde a la versión del paquete que puedes observar en el package.json
@@ -178,7 +181,7 @@ NPM Deploy
         ]
 
 
-8. Paso #7: Pruebas automáticas
+9. Paso #8: Pruebas automáticas
     Es importante asegurarnos que nuestro paquete tenga pruebas automáticas para asegurarnos que funciona como esperamos el día de mañana, esto no asegura que el paquete funcionará sin errores, pero por lo menos tendremos la seguridad de que las funcionalidades principales están probadas y siguen funcionando en cada Release. Esto reduce enormemente el estrés de que nuevas versiones puedan tener breaking changes no intencionales.
 
 
@@ -208,7 +211,7 @@ NPM Deploy
 
         "test:watch": "tsdx test --watch",
 
-9. Paso #8: Publicar
+10. Paso #9: Publicar
 
     * 1- Crear una cuenta en NPM
 
@@ -218,7 +221,7 @@ NPM Deploy
     * 3- Ejecutar el siguiente comando para publicar la aplicación:
         <h3>yarn publish </h3>
 
-10. para hacer actualizaciones de nuestro proyecto en NPM "NPM Update - Actualización"
+11. para hacer actualizaciones de nuestro proyecto en NPM "NPM Update - Actualización"
     Una actualización se resume:
     * 1- Actualizar la carpeta SRC - Si aplica
 
