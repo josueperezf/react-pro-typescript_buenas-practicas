@@ -16,7 +16,7 @@ export const ProductCard = ({children, product, className, style = {}, onChange,
         {
           children && children({
             count: counter,
-            maxCount: initialValues?.maxCount,
+            maxCount: (initialValues && initialValues.maxCount) ? initialValues?.maxCount : undefined,
             isMaxCountReached: isMaxCountReached,
             product,
             cambiarValor,

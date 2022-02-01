@@ -83,7 +83,35 @@ NPM Deploy
 2. Paso #1: debemos ir a las carpeta que nos genero al ejecutar el comando anterior, en ella ejecutamos en la terminal
     <b>npm start</b> para que nos genere la carpeta dist
 
-3. Paso #2: Crear paquete
+3. copiamos del proyecto que queremos convertir en plugin a nuestro proyecto, lo que tengamos en src, y lo pegamos en src de igual modo
+
+4. dentro de src del proyecto generado, creamos un archivo llamado <b> typings.d.ts</b>, en el colocamos lo siguiente
+
+        const postcss = require('rollup-plugin-postcss');
+        const images = require('@rollup/plugin-image');
+        module.exports = {
+            rollup(config, options) {
+            config.plugins = [
+                postcss({ modules: true }),
+                images({ incude: ['**/*.png', '**/*.jpg'] }),
+                ...config.plugins,
+            ];
+            return config;
+            },
+        };
+
+5. en el archivo  index.tsx de la carpeta src, borramos todo su contenido y pegamos esto
+
+        export *  from './components';
+
+    este contenido es para que el suario de nuestro plugin pueda  inportar cada uno de las cosas que creamos, ya que en components tenemos todo unido y alli mismo hacemos el export de cada uno de los componentes que creamos
+
+6.  si tenemos imagenes en nuestro plugin, y/o  css por modulos, debemos:
+
+        <b>npm add -D rollup-plugin-postcss
+        npm add -D @rollup/plugin-image</b>
+
+7. Paso #2: Crear paquete
 
     npx tsdx create <b>nombre_de_mi_paquete_a_crear</b>
     ejemplo <b>npx tsdx create jp_product-cad</b>
@@ -94,14 +122,14 @@ NPM Deploy
     tsdx.io - JavaScript y React
 
 
-4. Paso #3: Optimizar index.tsx
+8. Paso #3: Optimizar index.tsx
     El archivo src/index.tsx, es el punto de entrada de todas las importaciones, por lo que ahí debe de tener las exportaciones que las personas u otros desarrolladores importarán.
     
     Podemos crear exportaciones de esta forma para no perder nuestra estructura.
     
         export * from './components';
 
-5. Paso #4: ( Opcional ) Módulos
+9. Paso #4: ( Opcional ) Módulos
     Si tu código que estás creando tiene imágenes importadas de esta forma y/o CSS modularizado de esta forma:
 
         import noImage from ‘../assets/no-image.jpg';
@@ -129,27 +157,76 @@ NPM Deploy
 
     
     Realizar las instalaciones respectivas:
-    <b>yarn add -D rollup-plugin-postcss
-    yarn add -D @rollup/plugin-image</b>
+    <b>npm add -D rollup-plugin-postcss
+    npm add -D @rollup/plugin-image</b>
     
     Mas información sobre tsdx.config.js aquí
     <https://tsdx.io/customization#rollup>
 
 
-6. Paso #5: Build
+10. Paso #5: Build
     Ejecutar el comando
 
-    <b>yarn build</b>
-    o 
-    <b>npm build</b>
+    <b>npm run build</b>
     
     Corregir cualquier error que aquí aparezca.
 
-7. Paso #6: Example
+11. vamos a la carpeta example y creamos el ejemplo de como se utilizara nuestro componente, ejemplo
+
+    ```
+        import 'react-app-polyfill/ie11';
+        import * as React from 'react';
+        import * as ReactDOM from 'react-dom';
+        import { ProductCard, ProductImage, ProductTitle, ProductButtons } from '../.';
+
+        const products = [
+        {
+            id: '1',
+            title: 'Coffee Mug - Card',
+            // img: './coffee-mug.png'
+        },
+        {
+            id: '2',
+            title: 'Coffee Mug - Meme',
+            // img: './coffee-mug2.png'
+        }
+        ]
+
+        const App = () => {
+        return (
+            <>
+            {
+                products.map((product)=> (
+                <ProductCard key={product.id} product={product} initialValues={{count: 4, maxCount: 10}}>
+                    {
+                        ({reset, cambiarValor, isMaxCountReached, count, maxCount}) => (
+                        <>
+                        <ProductImage  />
+                        <ProductTitle />
+                        <ProductButtons />
+                        <button onClick={reset} > reset</button>
+                        <button onClick={()=>cambiarValor(-2) } >-2</button>
+                        { !isMaxCountReached && <button onClick={()=>cambiarValor(+2) } > +2</button>}
+                        <span>{count} {`${maxCount && - maxCount}`}</span>
+                        </>
+                        )
+                    }
+                </ProductCard>
+
+                ))
+            }
+            </>
+        );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+
+    ```
+11. Paso #6: Example
 
     Crear un ejemplo de cómo se usa el código, usualmente personas que tengan curiosidad y necesidad de un ejemplo, irán a verlo.
 
-8.  Paso #7: GitHub Repo
+12.  Paso #7: GitHub Repo
     Este paso aunque suene opcional, es importante para la longevidad del proyecto, puede que eventualmente decidas dejarlo y heredarlo a otra persona que lo continuará o invitar colaboradores que puedan realizar actualizaciones o bien aceptar mejoras que otras personas puedan hacer a tu paquete.
     
     Adicionalmente tratar de mantener release tags acorde a la versión del paquete que puedes observar en el package.json
@@ -181,7 +258,7 @@ NPM Deploy
         ]
 
 
-9. Paso #8: Pruebas automáticas
+13. Paso #8: Pruebas automáticas
     Es importante asegurarnos que nuestro paquete tenga pruebas automáticas para asegurarnos que funciona como esperamos el día de mañana, esto no asegura que el paquete funcionará sin errores, pero por lo menos tendremos la seguridad de que las funcionalidades principales están probadas y siguen funcionando en cada Release. Esto reduce enormemente el estrés de que nuevas versiones puedan tener breaking changes no intencionales.
 
 
@@ -189,19 +266,18 @@ NPM Deploy
     
     * 1 Instalar las dependencias:
 
-        <b> yarn add --dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer </b>
+        <b> npm add --dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer </b>
 
     * 2 Instalar la contraparte de TypeScript
     
-        <b>yarn add @types/react @types/react-dom @types/react-test-renderer</b>
+        <b>npm add @types/react @types/react-dom @types/react-test-renderer</b>
     
         Ignorar imágenes y css cargados como módulos de JavaScript que darán error. <b>Añadir la siguiente configuración en el package.json </b>
 
 
             "jest":{
                 "moduleNameMapper": {
-                    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|
-                    m4a|aac|oga)$": "identity-obj-proxy",
+                    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy",
                     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
                 }
             }
@@ -211,7 +287,13 @@ NPM Deploy
 
         "test:watch": "tsdx test --watch",
 
-10. Paso #9: Publicar
+14. pruebas (opcional)
+
+    * para las pruebas corremos en la terminal el comando <b>npm run test:watch</b>
+
+    * en el archivo 'blah.test.tsx' borramos lo referente a 'Thing' que no lo estamos utilizando
+
+15. Paso #9: Publicar
 
     * 1- Crear una cuenta en NPM
 
@@ -219,9 +301,9 @@ NPM Deploy
         <h3>npm login</h3>
 
     * 3- Ejecutar el siguiente comando para publicar la aplicación:
-        <h3>yarn publish </h3>
+        <h3>npm publish </h3>
 
-11. para hacer actualizaciones de nuestro proyecto en NPM "NPM Update - Actualización"
+16. para hacer actualizaciones de nuestro proyecto 'si lo necesitamos' en NPM "NPM Update - Actualización"
     Una actualización se resume:
     * 1- Actualizar la carpeta SRC - Si aplica
 
@@ -233,4 +315,4 @@ NPM Deploy
 
     * 5- Se recomienda crear un nuevo release tag
 
-    * 6- Ejecutar nuevamente el yarn publish
+    * 6- Ejecutar nuevamente el npm publish

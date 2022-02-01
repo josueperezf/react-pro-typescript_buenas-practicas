@@ -34,8 +34,8 @@ export const useProduct = ({product, onChange, value = 0, initialValues }: usePr
   const cambiarValor = (value: number) => {
     // sirve para incrementar o decrementar, utiliza el math para hacer que jamas permita un valor menor a cero
     let newValue = Math.max( counter + value, 0) ;
-    if (initialValues?.maxCount) {
-      newValue = Math.min(newValue, initialValues?.maxCount);
+    if (initialValues &&  initialValues.maxCount ) {
+      newValue = Math.min(newValue, initialValues.maxCount);
     }
     // setCounter( previo => Math.max(previo + value, 0) )
     setCounter(newValue);

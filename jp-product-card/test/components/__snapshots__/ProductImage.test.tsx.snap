@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductImage debe de mostar el componente con la iamgen del producto 1`] = `
+<div
+  className="productCard undefined"
+  style={Object {}}
+>
+  <img
+    alt=""
+    className="productImg  "
+    src="./coffee-mug2.png"
+  />
+</div>
+`;
+
+exports[`ProductImage debe de mostrar el componente correctamente con la imagen esperado 1`] = `
+<img
+  alt=""
+  className="productImg  "
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/15-09-26-RalfR-WLC-0098.jpg/1200px-15-09-26-RalfR-WLC-0098.jpg"
+/>
+`;
